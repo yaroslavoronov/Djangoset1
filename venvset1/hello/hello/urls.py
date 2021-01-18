@@ -2,6 +2,8 @@ from django.urls import path
 from firstapp import views
 
 urlpatterns = [
-    path('GET/shop/', views.GET),
-    path('POST/', views.POST),
+    path('GET/city/', views.GET_CITY),
+    path('GET/shop/', views.GET_SHOP),
+    path('POST/shop', views.POST),
+    path('create/', views.create),
 ]

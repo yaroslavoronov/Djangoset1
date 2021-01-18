@@ -1,0 +1,11 @@
+</head>
+<body class="container">
+    <h2>Список пользователей</h2>
+    <table>
+        <tr><th>Id</th><th>Имя</th><th>Возраст</th></tr>
+        {% for shop in people %}
+        <tr><td>{{ shop.id }}</td><td>{{ shop.name }}</td><td>{{ shop.age }}</td></tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
