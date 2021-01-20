@@ -5,5 +5,6 @@ urlpatterns = [
     path('GET/city/', views.GET_CITY),
     path('GET/shop/', views.GET_SHOP),
     path('POST/shop', views.POST),
-    path('create/', views.create),
+    path('GET/city/<int:city_ids>/street/', views.GET_STREET),
+    path('GET/city//street/', views.GET_STREET_ALL),
 ]

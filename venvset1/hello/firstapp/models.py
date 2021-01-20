@@ -15,3 +15,6 @@ class Shop(models.Model):
     city = models.ForeignKey(City, on_delete=models.CASCADE)
     street = models.ForeignKey(Street, on_delete=models.CASCADE)
     building = models.IntegerField()
+    time_open = models.TimeField()
+    time_close = models.TimeField()
+    open = models.IntegerField()
