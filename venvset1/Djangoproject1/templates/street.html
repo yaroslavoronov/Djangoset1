@@ -1,0 +1,6 @@
+<table>
+        <tr><th>Улица</th><th>Город</th></tr>
+        {% for street in streets %}
+        <tr><td>{{ street.name }}</td><td>{{ street.city.name }}</td></tr>
+        {% endfor %}
+    </table>

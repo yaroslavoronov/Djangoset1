@@ -1,0 +1,6 @@
+<table>
+        <tr><th>Название</th><th>Дом</th><th>Улица</th><th>Город</th><th>Время открытия</th><th>Время закрытия</th><th>Статус</th></tr>
+        {% for shop in shops %}
+        <tr><td>{{ shop.name }}</td><td>{{ shop.building }}</td><td>{{ shop.street.name }}</td><td>{{ shop.city.name }}</td><td>{{ shop.time_open }}</td><td>{{ shop.time_close }}</td><td>{{ shop.open }}</td></tr>
+        {% endfor %}
+    </table>
