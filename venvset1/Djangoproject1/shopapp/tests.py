@@ -1,7 +1,8 @@
-from django.test import TestCase
+from django.test import TestCase, Client
 from .models import*
 import datetime
-
+import unittest
+from .views import*
 
 class ModelTestClass(TestCase):
 
@@ -9,8 +10,10 @@ class ModelTestClass(TestCase):
     def setUpTestData(cls):
         City.objects.create(name="namecity")
         Street.objects.create(name="namestreet", city_id="1")
-        Shop.objects.create(id=1, name="shopname", city_id=1, street_id=1, building=11,
+        Shop.objects.create(name="shopname", city_id=1, street_id=1, building=11,
                             time_open="16:00", time_close="08:00", open=-1)
+        Shop.objects.create(name="shopname", city_id=1, street_id=1, building=11,
+                            time_open="08:00", time_close="16:00", open=-1)
         pass
 
     def test_city(self):
@@ -44,3 +47,48 @@ class ModelTestClass(TestCase):
         self.assertEquals(time_close,  datetime.time(8, 0))
         self.assertEquals(open, -1)
         pass
+
+
+class SimpleTest(unittest.TestCase):
+    def setUpTestData(self):
+        City.objects.create(name="namecity")
+        Street.objects.create(name="namestreet", city_id="1")
+        Shop.objects.create(name="shopname", city_id=1, street_id=1, building=11,
+                            time_open="16:00", time_close="08:00", open=1)
+        Shop.objects.create(name="shopname", city_id=1, street_id=1, building=11,
+                            time_open="08:00", time_close="16:00", open=-1)
+        pass
+
+    def test_post(self):
+        client = Client()
+        response = client.get('/POST/auchas/1/1/13/14:00/18:00')
+        self.assertEqual(response.status_code, 200)
+
+    def test_get_shop(self):
+        client = Client()
+        response = client.get('/GET/shop/')
+        self.assertEqual(response.status_code, 200)
+
+    def test_get_city(self):
+        client = Client()
+        response = client.get('/GET/city/')
+        self.assertEqual(response.status_code, 200)
+
+    def test_get_city_filter(self):
+        client = Client()
+        response = client.get('/GET/city/1/street/')
+        self.assertEqual(response.status_code, 200)
+
+    def test_get_city_all(self):
+        client = Client()
+        response = client.get('/GET/city//street/')
+        self.assertEqual(response.status_code, 200)
+
+    def test_get_shop_filter(self):
+        client = Client()
+        shops = (client.get('/GET/shop/', {'open': 1}))
+        x=0
+        for shop in shops:
+            if shop.open==0:
+                x=x+1
+        self.assertEqual(x, 0)
